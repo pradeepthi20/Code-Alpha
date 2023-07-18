@@ -1,35 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>File Converter</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>File converter website</title>
+    <script src="script.js" defer></script>
 </head>
 <body>
-  <div class="container">
-    <h1>File Converter</h1>
-    <div class="box">
-      <form id="conversionForm">
-        <div class="form-group">
-          <label for="inputFile">Select a file:</label>
-          <input type="file" id="inputFile">
+    <!-- <section> -->
+        <div class="container">
+            <h1 id="fileConverter">File Converter</h1>
+            <div class="file-opt">
+              <div class="input-group">
+              <span id="file-link" class="file-link">File Name</span>
+    <input type="text" id="file-input" class="file-input" placeholder="Enter file name">
+            </div>
+            <div class="save">
+              <label>Save as</label>
+              <div class="select">
+                <select>
+                  <!-- PUT THE 'COMMON MIME TYPES IN THE VALUE' -->
+                  <option value="text/plain">Text File (.txt)</option>
+                  <option value="application/msword">Doc File (.doc)</option>
+                  <option value="application/vnd.ms-powerpoint">PPT File (.ppt)</option>
+                  <option value="text/html">Html File (.html)</option>
+                  <option value="image/svg+xml">SVG File (.svg)</option>
+                  <option value="text/javascript">Js File (.js)</option>
+                </select>
+              </div>
+            </div>
+            </div>
+            <textarea required placeholder="Enter your message here..."> </textarea>
+            <button class="save-btn">Save As Text File</button>
         </div>
-        <div class="form-group">
-          <label for="convertType">Conversion Type:</label>
-          <select id="convertType">
-            <option value="wordToPdf">Word to PDF</option>
-            <option value="pdfToWord">PDF to Word</option>
-          </select>
-        </div>
-        <button type="submit">Convert</button>
-      </form>
-    </div>
-    <div id="loading" class="loading-screen">
-      <div class="loading-spinner"></div>
-    </div>
-    <div id="output"></div>
-  </div>
 
-  <script src="script.js"></script>
+ 
+
 </body>
 </html>
