@@ -1,44 +1,49 @@
-const conversionForm = document.getElementById('conversionForm');
-const inputFile = document.getElementById('inputFile');
-const convertType = document.getElementById('convertType');
-const outputDiv = document.getElementById('output');
-const loadingScreen = document.getElementById('loading');
+var fileLink = document.getElementById('file-link');
+var fileInput = document.getElementById('file-input');
 
-conversionForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const file = inputFile.files[0];
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('convertType', convertType.value);
-
-    showLoadingScreen();
-
-    fetch('/convert', {
-            method: 'POST',
-            body: formData,
-        })
-        .then(response => response.blob())
-        .then(blob => {
-            const fileURL = URL.createObjectURL(blob);
-            setTimeout(() => {
-                hideLoadingScreen();
-                outputDiv.innerHTML = `<a href="${fileURL}" download="convertedFile">Download Converted File</a>`;
-            }, 2000); // 2 seconds delay
-        })
-        .catch(error => {
-            console.error('Error converting file:', error);
-            setTimeout(() => {
-                hideLoadingScreen();
-                outputDiv.innerHTML = '<p>Conversion failed.</p>';
-            }, 2000); // 2 seconds delay
-        });
+fileLink.addEventListener('click', function () {
+    fileInput.style.display = 'inline';
+    fileInput.focus();
 });
 
-function showLoadingScreen() {
-    loadingScreen.style.display = 'flex';
-}
+const fileConverterHeading = document.getElementById('fileConverter');
+fileConverterHeading.addEventListener('click', function () {
+    location.reload();
+});
 
-function hideLoadingScreen() {
-    loadingScreen.style.display = 'none';
-}
+const textarea = document.querySelector("textarea"),
+    fileNameInput = document.querySelector(".input-group input"),
+    selectMenu = document.querySelector(".save select"),
+    saveBtn = document.querySelector(".save-btn")
+
+selectMenu.addEventListener("change", () => {
+
+    let selectedOpt = selectMenu.options[selectMenu.selectedIndex].text;
+    saveBtn.innerHTML = `save As ${selectedOpt.split(" ")[0]} File`;
+})
+
+
+saveBtn.addEventListener("click", () => {
+    // The Blob object represents a blob, which is a file-like object of immutable, raw data; they can be read as text or binary data, 
+    // or converted into a ReadableStream so its methods can be used for processing the data.
+    //  const blob = new Blob(blobContent, Mime-types);
+    const blob = new Blob([textarea.value], {
+        type: selectMenu.value
+    })
+
+    // the URL.createObjectURL() function is used to generate a URL for a Blob created from an image file    const fileYrl = URL.createObjectURL(blob)
+    const fileUrl = URL.createObjectURL(blob);
+
+    //  In web development, the <a> element is commonly used to create hyperlinks or clickable links on a webpage. By creating a new <a> element using document.createElement('a'), you can dynamically generate a link element programmatically.
+    const link = document.createElement('a')
+
+    // these lines of code set the filename, URL, and simulate a click event on a link element to initiate a file download or navigate to a specific URL.
+    link.download = fileNameInput.value;
+    link.href = fileUrl;
+    link.click();
+    console.log(blob)
+})
+
+// saveBtn.addEventListener('click',()=>{
+//   console.log(textarea.value)
+// })
